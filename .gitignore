@@ -1,0 +1,8 @@
+# Air live-reload
+.air.toml
+
+# Files with HTTP requests for testing purposes
+*.http
+
+# Binaries
+bin/

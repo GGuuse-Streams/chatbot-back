@@ -1,0 +1,6 @@
+database:
+  connectionString: "postgres://root:secret@localhost:5433/gs_chatbot?sslmode=disable"
+
+server:
+  host: "localhost"
+  port: "3000"

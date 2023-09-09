@@ -6,6 +6,7 @@ import (
 	"github.com/GGuuse-Streams/chatbot-back/internal/db/queries"
 	"github.com/jackc/pgx/v5"
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"go.uber.org/fx"
 )
 
 func New(cfg *config.Config) queries.DBTX {
@@ -17,3 +18,8 @@ func New(cfg *config.Config) queries.DBTX {
 
 	return conn
 }
+
+var NewDBModule = fx.Options(
+	fx.Provide(New),
+	fx.Provide(queries.New),
+)

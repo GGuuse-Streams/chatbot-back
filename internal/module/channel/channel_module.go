@@ -28,9 +28,11 @@ func NewChannelRouter(app *fiber.App, service *service.ChannelService) *Router {
 }
 
 func (r *Router) RegisterChannelRoutes() {
-	r.App.Route("/channels", func(router fiber.Router) {
+	r.App.Route("/channel", func(router fiber.Router) {
 		router.Get("/", r.Service.GetChannels)
 		router.Get("/:id", r.Service.GetChannel)
 		router.Post("/", r.Service.CreateChannel)
+		router.Delete("/:id", r.Service.DeleteChannel)
+		router.Put("/", r.Service.UpdateChannel)
 	})
 }

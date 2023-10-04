@@ -11,7 +11,7 @@ import (
 
 func New(cfg *config.Config) queries.DBTX {
 	conn, err := pgx.Connect(context.Background(), cfg.Database.ConnectionString)
-	//conn, err := sql.Open("pgx", cfg.Database.ConnectionString)
+
 	if err != nil {
 		panic(err)
 	}

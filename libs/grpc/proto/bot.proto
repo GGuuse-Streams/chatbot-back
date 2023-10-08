@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bot;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/GGuuse-Streams/chatbot-back/libs/grpc/generated/bot";
+
+service Bot {
+  rpc Join(JoinOrLeaveRequest) returns (google.protobuf.Empty);
+  rpc Leave(JoinOrLeaveRequest) returns (google.protobuf.Empty);
+}
+
+message JoinOrLeaveRequest {
+  string channel = 1;
+}

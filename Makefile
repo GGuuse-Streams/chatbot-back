@@ -24,6 +24,12 @@ sqlc-generate:
 	docker run --rm -v ".:/src" -w /src sqlc/sqlc generate
 ###
 
+# GRPC
+proto-gen:
+	cd libs/grpc && go run gen.go
+
+###
+
 # Simple build-run
 build:
 	go build -o ./bin/server.exe ./cmd/main.go
@@ -37,4 +43,4 @@ live-reload:
 	air ./bin/main.go
 ###
 
-.PHONY: migrate-up migrate-down sqlc-init sqlc-generate build run live-reload pg-init pg-createdb pg-docker
+.PHONY: migrate-up migrate-down sqlc-init sqlc-generate build run live-reload pg-init pg-createdb pg-docker proto-gen

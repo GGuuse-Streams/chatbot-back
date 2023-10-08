@@ -1,6 +1,13 @@
-database:
+app:
+  appEnv: "dev"
   connectionString: "postgres://root:secret@localhost:5433/gs_chatbot?sslmode=disable"
 
-server:
-  host: "localhost"
-  port: "3000"
+twitch:
+    clientId: "37eccc5s2zfae6x378njpe0jdnro5k"
+    clientSecret: "o3i0m5np2hl5lr2boj7zf21n7cvsaw"
+    callbackUrl: "localhost:3000"
+
+bot:
+    username: "gguuse"
+    accessToken: "oauth:06xhcfbdr51g7k7j6lel0g0mdvm56l"
+    # refreshToken: ""

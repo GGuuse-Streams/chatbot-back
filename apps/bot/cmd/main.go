@@ -16,7 +16,5 @@ func main() {
 		db.NewDB,
 
 		fx.Invoke(grpc.New),
-		//fx.Invoke(func(lc fx.Lifecycle, s *grpc.BotServer) { s.Start(lc) }),
-		//fx.Invoke(func(lc fx.Lifecycle, c *client.TwitchClient) { c.Start(lc) }),
 	).Run()
 }

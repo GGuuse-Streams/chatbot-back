@@ -17,28 +17,32 @@ type TwitchClient struct {
 	q   *queries.Queries
 }
 
-func New(cfg *config.Config, q *queries.Queries) *TwitchClient {
-	return &TwitchClient{
+func New(lc fx.Lifecycle, cfg *config.Config, q *queries.Queries) *TwitchClient {
+	client := &TwitchClient{
 		Client: irc.NewClient(cfg.Bot.Username, cfg.Bot.AccessToken),
 		q:      q,
 		cfg:    cfg,
 	}
+
+	client.start(lc)
+
+	return client
 }
 
-func (c *TwitchClient) Start(lc fx.Lifecycle) {
+func (c *TwitchClient) start(lc fx.Lifecycle) {
 	lc.Append(fx.Hook{
 		OnStart: func(_ context.Context) error {
 			c.setupHandlers()
-			if err := c.initialJoins(); err != nil {
-				return err
-			}
 
 			go func() {
 				if err := c.Connect(); err != nil {
-					log.Println("Unable to connect to Twitch IRC")
-					return
+					log.Fatal("Unable to connect to Twitch IRC")
 				}
 			}()
+
+			if err := c.initialJoins(); err != nil {
+				return err
+			}
 
 			return nil
 		},
@@ -64,7 +68,6 @@ func (c *TwitchClient) initialJoins() error {
 
 	for _, channel := range channels {
 		c.Join(channel.TwitchName)
-		log.Printf("Joined %s", channel.TwitchName)
 	}
 
 	return nil

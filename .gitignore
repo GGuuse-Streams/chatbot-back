@@ -6,3 +6,6 @@
 
 # Binaries
 bin/
+
+# Generated gRPC
+libs/grpc/generated

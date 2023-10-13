@@ -1,11 +1,5 @@
-# Air live-reload
-.air.toml
-
 # Files with HTTP requests for testing purposes
 *.http
 
-# Binaries
-bin/
-
-# Generated gRPC
-libs/grpc/generated
+# Actual config
+config/config.yml

@@ -1,6 +1,6 @@
 app:
   appEnv: "dev"
-  connectionString: "postgres://root:secret@localhost:5433/gs_chatbot?sslmode=disable"
+  connectionString: "postgres://root:secret@db:5432/gs_chatbot?sslmode=disable"
 
 twitch:
     clientId: "37eccc5s2zfae6x378njpe0jdnro5k"

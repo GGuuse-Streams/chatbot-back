@@ -27,9 +27,12 @@ type botConfig struct {
 
 func New() *Config {
 	var cfg Config
-	err := cleanenv.ReadConfig("../../config/config.yml", &cfg)
+
+	err := cleanenv.ReadConfig("../config/config.yml", &cfg)
 	if err != nil {
 		panic(err)
 	}
 	return &cfg
 }
+
+// ! TODO: Add config in environment variables for docker-compose

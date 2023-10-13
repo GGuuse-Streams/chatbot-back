@@ -24,7 +24,7 @@ func New(lc fx.Lifecycle, c *client.TwitchClient) error {
 		twitch: c,
 	}
 
-	grpcNetListener, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", 9090))
+	grpcNetListener, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", 9090))
 	if err != nil {
 		log.Fatal("cannot create listener")
 	}
@@ -46,7 +46,7 @@ func (b BotServer) start(lc fx.Lifecycle, grpcServer *grpc.Server, grpcNetListen
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			grpcServer.Stop()
+			grpcServer.GracefulStop()
 			return nil
 		},
 	})

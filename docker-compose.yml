@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+    bot:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            target: bot
+        ports:
+          - "9090"
+        depends_on:
+          db:
+            condition: service_started
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 30
+    commands:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            target: commands
+        depends_on:
+          bot:
+            condition: service_started
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 30
+    db:
+        image: postgres:15-alpine
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_DB=gs_chatbot
+            - POSTGRES_PASSWORD=secret

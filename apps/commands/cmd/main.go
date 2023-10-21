@@ -1,18 +1,22 @@
 package main
 
 import (
-	"context"
-	"github.com/GGuuse-Streams/chatbot-back/libs/grpc/clients"
-	"github.com/GGuuse-Streams/chatbot-back/libs/grpc/generated/bot"
+	"github.com/GGuuse-Streams/chatbot-back/apps/commands/internal/db"
+	"github.com/GGuuse-Streams/chatbot-back/apps/commands/internal/grpc"
+	"github.com/GGuuse-Streams/chatbot-back/libs/config"
+	"go.uber.org/fx"
+	"log"
 )
 
 func main() {
-	c := clients.NewBotClient()
+	log.SetPrefix("commands microservice: ")
+	fx.New(
+		fx.NopLogger,
 
-	_, err := c.Join(context.Background(), &bot.JoinOrLeaveRequest{
-		Channel: "gguuse",
-	})
-	if err != nil {
-		return
-	}
+		fx.Provide(config.New),
+
+		db.NewDB,
+
+		fx.Invoke(grpc.New),
+	).Run()
 }

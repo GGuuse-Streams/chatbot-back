@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package commands;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/GGuuse-Streams/chatbot-back/libs/grpc/generated/commands";
+
+service Commands {
+  rpc ProcessCommand(ProcessCommandRequest) returns (ProcessCommandResponse);
+}
+
+message ProcessCommandRequest {
+  string command = 1;
+  string channel = 2;
+}
+
+message ProcessCommandResponse {
+  string response = 1;
+}

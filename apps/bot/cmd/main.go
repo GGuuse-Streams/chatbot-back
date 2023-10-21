@@ -5,6 +5,7 @@ import (
 	"github.com/GGuuse-Streams/chatbot-back/bot/internal/db"
 	"github.com/GGuuse-Streams/chatbot-back/bot/internal/grpc"
 	"github.com/GGuuse-Streams/chatbot-back/libs/config"
+	"github.com/GGuuse-Streams/chatbot-back/libs/grpc/clients"
 	"go.uber.org/fx"
 	"log"
 )
@@ -15,7 +16,9 @@ func main() {
 		fx.NopLogger,
 
 		fx.Provide(config.New),
-		fx.Provide(client.New),
+		fx.Provide(client.NewTwitch),
+
+		fx.Provide(clients.NewCommands),
 
 		db.NewDB,
 

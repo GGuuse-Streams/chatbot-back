@@ -22,3 +22,7 @@ UPDATE channels
    SET twitch_name = $2, twitch_id = $3
  WHERE id = $1
  RETURNING *;
+
+-- name: GetChannelIdByName :one
+SELECT id FROM channels
+         WHERE twitch_name = $1;

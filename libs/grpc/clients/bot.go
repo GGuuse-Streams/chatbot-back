@@ -6,13 +6,11 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func NewBotClient() bot.BotClient {
+func NewBot() bot.BotClient {
 	conn, err := grpc.Dial("bot:9090", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}
 
-	client := bot.NewBotClient(conn)
-
-	return client
+	return bot.NewBotClient(conn)
 }

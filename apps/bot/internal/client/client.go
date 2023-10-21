@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/GGuuse-Streams/chatbot-back/bot/internal/client/handlers"
 	"github.com/GGuuse-Streams/chatbot-back/libs/config"
+	"github.com/GGuuse-Streams/chatbot-back/libs/grpc/generated/commands"
 	"github.com/GGuuse-Streams/chatbot-back/libs/queries"
 	irc "github.com/gempir/go-twitch-irc/v4"
 	"go.uber.org/fx"
@@ -15,13 +16,20 @@ type TwitchClient struct {
 
 	cfg *config.Config
 	q   *queries.Queries
+	cc  commands.CommandsClient
 }
 
-func New(lc fx.Lifecycle, cfg *config.Config, q *queries.Queries) *TwitchClient {
+func NewTwitch(
+	lc fx.Lifecycle,
+	cfg *config.Config,
+	q *queries.Queries,
+	cc commands.CommandsClient,
+) *TwitchClient {
 	client := &TwitchClient{
 		Client: irc.NewClient(cfg.Bot.Username, cfg.Bot.AccessToken),
 		q:      q,
 		cfg:    cfg,
+		cc:     cc,
 	}
 
 	client.start(lc)
@@ -56,7 +64,7 @@ func (c *TwitchClient) setupHandlers() {
 	c.OnConnect(handlers.OnConnect)
 	c.OnSelfJoinMessage(handlers.OnSelfJoin)
 	c.OnSelfPartMessage(handlers.OnSelfPart)
-	c.OnPrivateMessage(handlers.OnPrivateMessage)
+	c.OnPrivateMessage(handlers.OnPrivateMessage(c.Client, c.cc))
 }
 
 func (c *TwitchClient) initialJoins() error {

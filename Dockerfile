@@ -1,7 +1,4 @@
-FROM node:18-alpine as builder
-COPY --from=golang:1.21.0-alpine /usr/local/go/ /usr/local/go/
-ENV PATH="$PATH:/usr/local/go/bin"
-ENV PATH="$PATH:/root/go/bin"
+FROM golang:1.21.0-alpine as builder
 
 WORKDIR /app
 
@@ -28,4 +25,5 @@ RUN cd apps/commands && \
 FROM alpine:latest as commands
 WORKDIR /app
 COPY --from=commands_builder /app/apps/commands/out /bin/commands
+COPY --from=commands_builder /app/config/config.yml /config/config.yml
 CMD ["/bin/commands"]

@@ -22,7 +22,7 @@ services:
             dockerfile: ./Dockerfile
             target: commands
         depends_on:
-          bot:
+          db:
             condition: service_started
         deploy:
           restart_policy:
